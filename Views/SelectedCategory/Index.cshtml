@@ -1,0 +1,142 @@
+﻿@model List<DbOptions.Models.product_entity>
+@{
+    ViewData["Title"] = "ListOfProducts";
+}
+
+<div class="container mt-5">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-6 mb-4">
+                <div class="product-card p-3 h-100">
+                    <h4 class="product-title text-center mb-3">@item.Name</h4>
+                    <div class="text-center mb-3">
+                        <img src="@item.PictureLink" class="product-image" alt="@item.Name" />
+                    </div>
+                    <div class="product-price text-center mb-2">
+                        <strong>$@item.Price</strong>
+                    </div>
+                    <div class="product-description text-center mb-3">
+                        @item.Description
+                    </div>
+                    <form method="post" action="/Cart/AddToCart" class="text-center">
+                        <div class="quantity-container mb-3">
+                            <button type="button" class="quantity-btn" onclick="decrement(this)">
+                                <svg viewBox="0 0 24 24" width="24" height="24">
+                                    <path d="M7 12L17 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                                </svg>
+                            </button>
+                            <input type="number" name="quantity" class="quantity-input" value="1" min="1" readonly />
+                            <button type="button" class="quantity-btn" onclick="increment(this)">
+                                <svg viewBox="0 0 24 24" width="24" height="24">
+                                    <path d="M12 7L12 17M7 12L17 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                                </svg>
+                            </button>
+                        </div>
+                        <input type="hidden" name="productId" value="@item.Id" />
+                        <button type="submit" class="btn btn-primary add-to-cart-btn">Add to Cart</button>
+                    </form>
+
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .product-card {
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        transition: transform 0.3s;
+    }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+    .product-image {
+        width: 100%;
+        max-width: 200px;
+        height: auto;
+        border-radius: 8px;
+    }
+
+    .product-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+    }
+
+    .product-price {
+        font-size: 1.1rem;
+        color: #007bff;
+    }
+
+    .product-description {
+        font-size: 0.9rem;
+        color: #666;
+    }
+
+    .quantity-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 150px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        overflow: hidden;
+        margin: 0 auto;
+    }
+
+    .quantity-btn {
+        width: 30px;
+        height: 38px;
+        background-color: transparent;
+        border: none;
+        font-size: 1.2rem;
+        cursor: pointer;
+        color: #333;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .quantity-btn svg {
+            width: 24px;
+            height: 24px;
+        }
+
+    .quantity-input {
+        width: 90px;
+        height: 38px;
+        text-align: center;
+        border: none;
+        font-size: 1rem;
+        color: #333;
+    }
+
+    .add-to-cart-btn {
+        font-size: 1rem;
+        font-weight: bold;
+        border-radius: 5px;
+        padding: 10px 20px;
+    }
+
+    body {
+        background-color: #f8f9fa;
+    }
+</style>
+
+<script>
+    function increment(button) {
+        const input = button.previousElementSibling;
+        input.value = parseInt(input.value) + 1;
+    }
+
+    function decrement(button) {
+        const input = button.nextElementSibling;
+        if (parseInt(input.value) > 1) {
+            input.value = parseInt(input.value) - 1;
+        }
+    }
+</script>

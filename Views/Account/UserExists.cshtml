@@ -1,0 +1,55 @@
+﻿@{
+    ViewData["Title"] = "User Exists";
+}
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        <ul>
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <li>@error.ErrorMessage</li>
+            }
+        </ul>
+    </div>
+}
+
+<input type="hidden" name="phoneNumber" value="@ViewBag.PhoneNumber" />
+
+<div class="d-flex justify-content-center align-items-center vh-100">
+    <div class="signup-container-wide">
+        <h2 class="text-center mt-4">User Already Exists</h2>
+        <p class="text-center">A user with this email or phone number already exists. Please try logging in or using a different contact method.</p>
+    </div>
+</div>
+
+<style>
+    body {
+        background-color: #f8f9fa;
+    }
+
+    .vh-100 {
+        height: 100vh;
+    }
+
+    .signup-container-wide {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 85%;
+        max-width: 800px; /* Максимальная ширина для предотвращения излишней ширины на больших экранах */
+        background-color: #fff;
+        border-radius: 10px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        padding: 20px;
+    }
+
+    h2 {
+        text-align: center;
+    }
+
+    p {
+        text-align: center;
+    }
+</style>
