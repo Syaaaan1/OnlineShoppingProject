@@ -22,19 +22,34 @@ namespace OnlineShopingProject.Controllers
         // Метод для отображения страницы корзины
         public async Task<IActionResult> CartView()
         {
-            Cart cart;
-            if (User.Identity.IsAuthenticated)
+            try
             {
-                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                cart = await GetOrCreateCartForUser(userId);
-            }
-            else
-            {
-                cart = await GetOrCreateCartForSession();
-            }
+                Cart cart;
+                if (User.Identity.IsAuthenticated)
+                {
+                    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                    Console.WriteLine($"User ID: {userId}"); // Добавьте логирование
+                    if (string.IsNullOrEmpty(userId))
+                    {
+                        Console.WriteLine("Authenticated user, but userId is null or empty");
+                        return RedirectToAction("Error", "Home", new { message = "User identification failed" });
+                    }
+                    cart = await GetOrCreateCartForUser(userId);
+                }
+                else
+                {
+                    cart = await GetOrCreateCartForSession();
+                }
 
-            return View(cart);
+                return View(cart);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in CartView: {ex.Message}");
+                return RedirectToAction("Error", "Home", new { message = "An error occurred while retrieving the cart" });
+            }
         }
+
 
         [HttpPost]
         [Route("AddToCart")]
@@ -48,6 +63,11 @@ namespace OnlineShopingProject.Controllers
             if (User.Identity.IsAuthenticated)
             {
                 var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (string.IsNullOrEmpty(userId))
+                {
+                    // Обработка ошибки: не удалось получить идентификатор пользователя
+                    return RedirectToAction("Error", "Home");
+                }
                 cart = await GetOrCreateCartForUser(userId);
             }
             else
@@ -73,8 +93,7 @@ namespace OnlineShopingProject.Controllers
 
             await _context.SaveChangesAsync();
 
-            // Перенаправление обратно на ту же страницу
-            return RedirectToAction("Index", "SelectedCategoryController"); // Измените "Product" на нужный контроллер и метод, где отображается список продуктов
+            return Redirect(Request.Headers["Referer"].ToString());
         }
 
         private async Task<Cart> GetOrCreateCartForUser(string userId)

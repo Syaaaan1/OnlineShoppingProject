@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
 
-builder.Services.AddDistributedMemoryCache();//поддержка сессий???????
+builder.Services.AddDistributedMemoryCache();//поддержка сессий,,,
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);

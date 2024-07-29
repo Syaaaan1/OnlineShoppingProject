@@ -36,36 +36,38 @@ namespace OnlineShopingProject.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(string username, string password)
         {
-            // Найти пользователя по имени
             var user = await _context.Users
                 .Where(u => u.Username == username)
                 .FirstOrDefaultAsync();
 
-            // Проверка наличия пользователя и пароля
-            if (user != null && VerifyPassword(user.passwordHash, password)) // Функция проверки пароля
+            if (user != null && VerifyPassword(user.passwordHash, password))
             {
+                // Логирование идентификатора пользователя
+                Console.WriteLine($"-------------------------------------------------User ID: {user.Id}");
+
                 var claims = new List<Claim>
-                {
-                    new Claim(ClaimTypes.Name, user.Username),
-                    new Claim(ClaimTypes.Email, user.Email),
-                    // Можно добавить другие клеймы, если нужно
-                };
+                    {
+                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                        new Claim(ClaimTypes.Name, user.Username),
+                        new Claim(ClaimTypes.Email, user.Email),
+                    };
 
                 var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                 var authProperties = new AuthenticationProperties
                 {
-                    // Можно настроить дополнительные параметры
+                    // Дополнительные параметры
                 };
 
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,
                     new ClaimsPrincipal(claimsIdentity), authProperties);
 
-                return RedirectToAction("IndexLoggedAccount", "Home"); // Переход на главную страницу или другую защищенную страницу
+                return RedirectToAction("IndexLoggedAccount", "Home");
             }
 
             ModelState.AddModelError(string.Empty, "Неверное имя пользователя или пароль.");
             return View("LoginPage");
         }
+
 
         // Метод для проверки пароля
         private bool VerifyPassword(string hashedPassword, string password)
