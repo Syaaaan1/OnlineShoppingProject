@@ -181,12 +181,11 @@
             $('#fastCheckoutForm').on('submit', function (event) {
                 var form = $(this);
                 if (!form[0].checkValidity()) {
-                    event.preventDefault(); // Останавливаем отправку формы
+                    event.preventDefault();
                     alert('Пожалуйста, заполните необходимые данные');
                 }
             });
 
-            // Ваш существующий код
             $('.quantity-input').on('change', function () {
                 var itemId = $(this).data('item-id');
                 var newQuantity = $(this).val();
