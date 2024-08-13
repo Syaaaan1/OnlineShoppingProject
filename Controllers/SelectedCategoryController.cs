@@ -25,7 +25,7 @@ namespace OnlineShopingProject.Controllers
         public async Task<IActionResult> AllItems()
         {
             var products = await _context.Products.ToListAsync();
-            return View(products); // Обязательно создайте соответствующее представление для всех товаров
+            return View(products);
         }
     }
 }

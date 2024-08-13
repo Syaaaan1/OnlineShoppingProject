@@ -1,14 +1,13 @@
 using DbOptions;
 using Microsoft.EntityFrameworkCore;
 using DbOptions.CrudOperations;
-using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
 
-builder.Services.AddDistributedMemoryCache();//поддержка сессий,,,
+builder.Services.AddDistributedMemoryCache();//поддержка сессий
 builder.Services.AddSession(options =>
 {
     options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -16,15 +15,13 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
-
-// Add services to the container.
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
         options.LoginPath = "/Login/LoginPage";
-        options.LogoutPath = "/Login/Logout"; // Не забудь добавить метод Logout в контроллер
+        options.LogoutPath = "/Login/Logout";
     });
 
 builder.Services.AddDbContext<DbContextShop>(
@@ -37,7 +34,6 @@ builder.Services.AddScoped<Crud>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -49,7 +45,7 @@ app.UseStaticFiles();
 app.UseSession();
 app.UseRouting();
 
-app.UseAuthentication(); // Добавлено
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

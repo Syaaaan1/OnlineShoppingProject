@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿/*using Microsoft.AspNetCore.Identity;
 
 namespace HashService.Services
 {
@@ -22,4 +22,4 @@ namespace HashService.Services
             return verificationResult == PasswordVerificationResult.Success;
         }
     }
-}
+}*/

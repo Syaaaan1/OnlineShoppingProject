@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<DbOptions.Models.product_entity>
 
-<h2>Search Results</h2>
+<h2 class="search-results-title">Search Results</h2>
+
 
 @if (!Model.Any())
 {
@@ -57,6 +58,18 @@ else
     </ul>
 }
 <style>
+    body {
+        background-image: url('/images/nn.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+    }
+    .search-results-title {
+        margin-top: 20px;
+    }
     .product-card {
         background-color: #fff;
         border-radius: 10px;
@@ -149,7 +162,7 @@ else
         left: 50%;
         transform: translate(-50%, -50%);
         width: 85%;
-        max-width: 800px; /* Максимальная ширина для предотвращения излишней ширины на больших экранах */
+        max-width: 800px;
         background-color: #fff;
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);

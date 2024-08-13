@@ -1,4 +1,4 @@
-﻿using DbOptions.Models;
+﻿/*using DbOptions.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +9,7 @@ namespace OnlineShopingProject.Controllers
     public class LoginUserInfoController : Controller
     {
         private readonly DbContextShop _context;
+
 
         public LoginUserInfoController(DbContextShop context)
         {
@@ -35,4 +36,4 @@ namespace OnlineShopingProject.Controllers
             return View(user);
         }
     }
-}
+}*/

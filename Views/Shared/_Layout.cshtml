@@ -89,21 +89,95 @@
                 margin-bottom: 1rem;
             }
         }
+
+        .nav-item.dropdown {
+            position: relative;
+        }
+
+            .nav-item.dropdown .nav-link {
+                color: #333;
+                transition: color 0.3s ease;
+            }
+
+            .nav-item.dropdown:hover .nav-link {
+                color: #007bff;
+            }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: #fff;
+            min-width: 160px;
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.1);
+            z-index: 1;
+            border: none;
+            padding: 0.5rem 0;
+        }
+
+        .nav-item.dropdown:hover .dropdown-menu {
+            display: block;
+        }
+
+        .dropdown-item {
+            display: block;
+            width: 100%;
+            padding: 0.5rem 1rem;
+            clear: both;
+            font-weight: 400;
+            color: #333;
+            text-align: inherit;
+            white-space: nowrap;
+            background-color: transparent;
+            border: 0;
+            text-decoration: none;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+            .dropdown-item:hover,
+            .dropdown-item:focus {
+                background-color: #f8f9fa;
+                color: #007bff;
+            }
+
+        .footer {
+            background-color: #222;
+            color: #fff;
+            padding: 5px 20px; /* Увеличьте отступы, чтобы футер выглядел более компактным */
+            font-size: 14px;
+            position: relative;
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .footer-nav a {
+            color: #add8e6;
+            text-decoration: none;
+            margin-left: 15px;
+            transition: color 0.3s ease;
+        }
+
+            .footer-nav a:hover {
+                color: #fff;
+                text-decoration: underline;
+            }
+
+        .main-content {
+            padding-bottom: 80px; /* Увеличьте отступ для предотвращения перекрытия футером */
+        }
     </style>
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container">
-                @* Проверяем, аутентифицирован ли пользователь *@
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <a class="navbar-brand large-text" asp-area="" asp-controller="Home" asp-action="IndexLoggedAccount">VO</a>
-                }
-                else
-                {
-                    <a class="navbar-brand large-text" asp-area="" asp-controller="Home" asp-action="Index">VO</a>
-                }
+                <a class="navbar-brand large-text" asp-area="" asp-controller="Home" asp-action="Index">VO</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -114,48 +188,42 @@
                             <input type="text" name="searchTerm" class="form-control" placeholder="Search">
                         </div>
                     </form>
-
-
                     <ul class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            @if (User.Identity.IsAuthenticated)
-                            {
-                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="IndexLoggedAccount">Home</a>
-                            }
-                            else
-                            {
-                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                            }
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Contacts">Contacts</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="About">About Us</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
                             <a href="@Url.Action("CartView", "CartLogo")" class="nav-link"><i class="fas fa-shopping-cart"></i></a>
                         </li>
-                        <li class="nav-item">
-                            <a href="@Url.Action("LoginPage", "Login")" class="nav-link account-icon"><i class="fas fa-user"></i></a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="#">Useful informationя</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Contacts">Contacts</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="About">About Us</a></li>
+                                <li><a class="dropdown-item" asp-area="" asp-controller="Home" asp-action="Privacy">Confidentiality</a></li>
+                            </ul>
                         </li>
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container main-content">
         <main role="main" class="pb-3">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
+    <footer class="footer">
         <div class="container">
-            &copy; 2024 - VO.kids store - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            <div class="footer-content">
+                <span>&copy; 2024 - VO.kids store</span>
+                <nav class="footer-nav">
+                    <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                    <a asp-area="" asp-controller="Home" asp-action="Terms">Terms</a>
+                    <a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a>
+                </nav>
+            </div>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

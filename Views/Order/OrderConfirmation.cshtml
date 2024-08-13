@@ -1,0 +1,22 @@
+﻿@*@model DbOptions.Models.order_entity
+
+<h2>Заказ подтвержден</h2>
+
+<p>Номер заказа: @Model.Id</p>
+<p>Дата заказа: @Model.OrderDate</p>
+<p>Статус: @Model.Status</p>
+<p>Общая сумма: @Model.TotalAmount.ToString("C")</p>
+<p>Адрес доставки: @Model.DeliveryAddress</p>
+<p>Способ оплаты: @Model.PaymentMethod</p>
+
+<h3>Детали заказа:</h3>
+<ul>
+    @foreach (var product in Model.Products)
+    {
+        <li>@product.Name - @product.Price.ToString("C")</li>
+    }
+</ul>
+
+<p>Спасибо за ваш заказ, @Model.User.Username!</p>
+
+<a asp-controller="Home" asp-action="Index" class="btn btn-primary">Вернуться на главную</a>*@

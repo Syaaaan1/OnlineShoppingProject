@@ -1,0 +1,99 @@
+﻿@model DbOptions.Models.order_entity
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Заказ подтвержден</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .main-content {
+            flex: 1;
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+
+        .order-details, .customer-details {
+            margin-bottom: 20px;
+        }
+
+            .order-details p, .customer-details p {
+                margin: 10px 0;
+            }
+
+        .product-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+            .product-list li {
+                padding: 5px 0;
+                border-bottom: 1px solid #eee;
+            }
+
+        .thank-you {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-top: 20px;
+        }
+
+        .footer {
+            background-color: #f8f9fa;
+            text-align: center;
+            padding: 10px 0;
+            margin-top: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="main-content">
+        <h2>Заказ подтвержден</h2>
+        <div class="customer-details">
+            <h3>Данные заказчика:</h3>
+            <p><strong>Имя:</strong> @Model.FirstName</p>
+            <p><strong>Фамилия:</strong> @Model.LastName</p>
+            <p><strong>Отчество:</strong> @Model.MiddleName</p>
+            <p><strong>Телефон:</strong> @Model.PhoneNumber</p>
+        </div>
+        <div class="order-details">
+            <h3>Информация о заказе:</h3>
+            <p><strong>Номер заказа:</strong> @Model.Id</p>
+            <p><strong>Дата заказа:</strong> @Model.OrderDate.ToString("dd.MM.yyyy HH:mm:ss")</p>
+            <p><strong>Общая сумма:</strong> @Model.TotalAmount.ToString("C")</p>
+            <p><strong>Адрес доставки:</strong> @Model.DeliveryAddress</p>
+            <p><strong>Способ оплаты:</strong> @Model.PaymentMethod</p>
+        </div>
+        <h3>Детали заказа:</h3>
+        <ul class="product-list">
+            @foreach (var product in Model.Products)
+            {
+                <li>@product.Name - @product.Price.ToString("C")</li>
+            }
+        </ul>
+        <p class="thank-you">Спасибо за ваш заказ!</p>
+    </main>
+</body>
+</html>

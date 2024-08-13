@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿/*using Microsoft.AspNetCore.Mvc;
 using DbOptions.Models;
 using System.Linq;
 using HashService.Services;
@@ -106,4 +106,4 @@ namespace YourNamespace.Controllers
             return View();
         }
     }
-}
+}*/

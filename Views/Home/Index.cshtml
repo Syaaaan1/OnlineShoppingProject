@@ -3,10 +3,16 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="container">
-    <h1 class="text-center mt-4 mb-5">Welcome</h1>
 
-    <div class="row justify-content-center mb-5">
+
+<ul class="slider">
+    <li class="item item1" style="background-image: url('https://images.unsplash.com/photo-1562624475-96c2bc08fab9?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MTkxODI2OTF8&ixlib=rb-4.0.3&q=85&width=700')"><span>Ex text1</span></li>
+    <li class="item item2" style="background-image: url('https://images.unsplash.com/photo-1534283844880-d5fd2ddd2cc9?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MTkxODI5OTN8&ixlib=rb-4.0.3&q=85&width=700')"><span>Ex text2</span></li>
+    <li class="item item3" style="background-image: url('https://images.unsplash.com/photo-1511745235279-2f7276d5ba65?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MTkxODMwNTh8&ixlib=rb-4.0.3&q=85&width=700')"><span>Ex text3</span></li>
+    <li class="item item4" style="background-image: url('https://images.unsplash.com/photo-1560930950-5cc20e80e392?crop=entropy&cs=srgb&fm=jpg&ixid=M3wzMjM4NDZ8MHwxfHJhbmRvbXx8fHx8fHx8fDE3MTkxODI1OTd8&ixlib=rb-4.0.3&q=85&width=700')"><span>Ex text4</span></li>
+</ul>
+
+    <!-- <div class="row justify-content-center mb-5">
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body text-center">
@@ -25,10 +31,11 @@
                 </div>
             </div>
         </div>
-    </div>
-
+    </div>-->
+    
     <h4 class="text-center mb-4">Let's start shopping</h4>
     <h2 class="text-center mb-4">Categories</h2>
+
 
     <div class="row">
         <!-- Категория "See all" -->
@@ -67,7 +74,6 @@
         }
     </div>
 </div>
-
 <style>
     .card {
         transition: transform 0.2s;
@@ -82,5 +88,50 @@
     .btn-lg {
         padding: 0.75rem 1.25rem;
         font-size: 1.25rem;
+    }
+    *, *::before, *::after {
+    box-sizing: border-box;
+    }
+    
+    .slider {
+      list-style-type: none;
+      padding: 0;
+      margin: 30px auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      max-width: 1200px;
+      height: 500px;
+    }
+    .slider .item {
+      flex: 1 1 25%;
+      height: 100%;
+      background: no-repeat center/cover #333;;
+      border: 1px solid;
+      text-align: center;
+      transition: .5s;
+    }
+    .slider .item:hover {
+      flex-basis: 75%;
+    } 
+
+    .slider .item span {
+      display: inline-block;
+      font-size: 2em;
+      font-weight: bold;
+      text-transform: uppercase;
+      background-color: rgba(255, 255, 255, .8);
+      padding: 6px 12px;
+      margin-top: 10%;
+    }
+
+    body {
+        background-image: url('/images/nn.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
     }
 </style>

@@ -2,9 +2,7 @@
 using DbOptions.Models;
 using Microsoft.EntityFrameworkCore;
 using DbOptions;
-using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace OnlineShopingProject.Controllers
 {
@@ -18,8 +16,12 @@ namespace OnlineShopingProject.Controllers
         {
             _context = context;
         }
-
-        // Метод для отображения страницы корзины
+        
+        
+        //есть участки для работы с авт юзерами
+        
+        
+        
         public async Task<IActionResult> CartView()
         {
             try
@@ -28,7 +30,7 @@ namespace OnlineShopingProject.Controllers
                 if (User.Identity.IsAuthenticated)
                 {
                     var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                    Console.WriteLine($"User ID: {userId}"); // Добавьте логирование
+                    Console.WriteLine($"User ID: {userId}"); //логирование
                     if (string.IsNullOrEmpty(userId))
                     {
                         Console.WriteLine("Authenticated user, but userId is null or empty");
@@ -96,6 +98,8 @@ namespace OnlineShopingProject.Controllers
             return Redirect(Request.Headers["Referer"].ToString());
         }
 
+
+
         private async Task<Cart> GetOrCreateCartForUser(string userId)
         {
             var cart = await _context.Carts
@@ -112,7 +116,7 @@ namespace OnlineShopingProject.Controllers
 
             return cart;
         }
-
+        
         private async Task<Cart> GetOrCreateCartForSession()
         {
             string cartId = HttpContext.Session.GetString(CartSessionKey);
@@ -172,5 +176,7 @@ namespace OnlineShopingProject.Controllers
 
             return RedirectToAction("CartView");
         }
+
+
     }
 }

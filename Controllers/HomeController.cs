@@ -15,22 +15,38 @@ public class HomeController : Controller
         _logger = logger;
     }
 
+
     public async Task<IActionResult> Index()
     {
         return View(await _context.Categories.ToListAsync());
     }
 
-    public async Task<IActionResult> IndexLoggedAccount()
+
+
+    /*public async Task<IActionResult> IndexLoggedAccount()
     {
-        // Предполагается, что у вас есть DbSet<category_entity> в вашем контексте
-        var categories = await _context.Categories.ToListAsync();
-        return View(categories);
-    }
+        return View(await _context.Categories.ToListAsync());
+    }*/
+
+
+
 
     public IActionResult Privacy()
     {
         return View();
     }
+
+    public IActionResult Contacts()
+    {
+        return View();
+    }
+
+    public IActionResult About()
+    {
+        return View();
+    }
+
+
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

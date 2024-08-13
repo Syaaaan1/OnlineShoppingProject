@@ -19,7 +19,7 @@
                     <div class="product-description text-center mb-3">
                         @item.Description
                     </div>
-                    <form method="post" action="/Cart/AddToCart" class="text-center">
+                    <form method="post" action="/Cart/AddToCart" class="text-center add-to-cart-form">
                         <div class="quantity-container mb-3">
                             <button type="button" class="quantity-btn" onclick="decrement(this)">
                                 <svg viewBox="0 0 24 24" width="24" height="24">
@@ -36,14 +36,25 @@
                         <input type="hidden" name="productId" value="@item.Id" />
                         <button type="submit" class="btn btn-primary add-to-cart-btn">Add to Cart</button>
                     </form>
-
                 </div>
             </div>
         }
     </div>
 </div>
 
+<div id="cart-popup" class="cart-popup">Product added to cart!</div>
+
 <style>
+    body {
+        background-image: url('/images/nn.jpg');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+    }
+
     .product-card {
         background-color: #fff;
         border-radius: 10px;
@@ -122,12 +133,67 @@
         padding: 10px 20px;
     }
 
-    body {
-        background-color: #f8f9fa;
+    .cart-popup {
+        display: none;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #007bff;
+        color: white;
+        padding: 15px;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        opacity: 0;
+        transition: opacity 0.5s;
     }
+
+        .cart-popup.show {
+            display: block;
+            opacity: 1;
+        }
 </style>
 
 <script>
+    document.querySelectorAll('.add-to-cart-form').forEach(form => {
+        form.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+
+            fetch(this.action, {
+                method: 'POST',
+                body: formData
+            })
+                .then(response => {
+                    if (response.ok) {
+                        return response.text();
+                    } else {
+                        throw new Error('Failed to add product to cart');
+                    }
+                })
+                .then(() => {
+                    showPopup('Product added to cart!');
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                })
+                .catch(error => {
+                    alert('Error adding product to cart.');
+                    console.error('Error:', error);
+                });
+        });
+    });
+
+    function showPopup(message) {
+        const popup = document.getElementById('cart-popup');
+        popup.textContent = message;
+        popup.classList.add('show');
+
+        setTimeout(() => {
+            popup.classList.remove('show');
+        }, 2000);
+    }
+
     function increment(button) {
         const input = button.previousElementSibling;
         input.value = parseInt(input.value) + 1;
